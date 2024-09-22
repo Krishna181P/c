@@ -1,0 +1,27 @@
+{% extends 'homeview.html' %}
+{% block content %}
+<!-- list of food -->
+<div class="main-detail">
+    <h2 class="main-title">Choose Order</h2>
+    <div class="detail-wrapper">
+        {% for item in foodmenu %}
+        <div class="detail-card">
+            <a href="{% url 'food_detail' item.id %}" style="text-decoration: none;">
+                <img class="detail-img" src="{{item.image.url}}" alt="">
+            </a>
+            <div class="detail-desc">
+                <div class="detail-name">
+                    <h5>{{item.food_name}}</h5>
+                    <h6 class="price">₹{{item.food_price}}</h6>
+                </div>
+                <form action="{% url 'wish_list' item.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="wishlistbtn" class="btn"><ion-icon class="detail-favorites"
+                            name="bookmark-outline"></ion-icon></button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

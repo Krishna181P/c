@@ -1,0 +1,101 @@
+{% extends 'homeview.html' %}
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link href="{% static 'css\style.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    {% block navbar %}
+    {% endblock %}
+    {% block recommend %}
+    {% endblock %}
+    {% block menu %}
+    {% endblock %}
+    {% block content %}
+    <section class="contactus">
+    <div class="contactus-conten">
+        <div class="contact-content">
+            <h2>Contact Us</h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate, dignissimos doloremque molestias
+                illum saepe totam? Facilis similique, quasi iure in quod tempore, nostrum eaque maiores optio tenetur
+                iste necessitatibus illum?</p>
+        </div>
+        <div class="contact-container">
+            <div class="contactInfo">
+                <div class="contact-box">
+                    <div class="contactus-icon"><ion-icon name="location-outline"></ion-icon></div>
+                    <div class="contactus-text">
+                        <h3>Address</h3>
+                        <p>Avenue Hotel Feroke <br>Kozhikode <br>673631</p>
+                    </div>
+                </div>
+                <div class="contact-box">
+                    <div class="contactus-icon"><ion-icon name="call-outline"></ion-icon></div>
+                    <div class="contactus-text">
+                        <h3>Phone</h3>
+                        <p>+919061982650</p>
+                    </div>
+                </div>
+                <div class="contact-box">
+                    <div class="contactus-icon"><ion-icon name="mail-outline"></ion-icon></div>
+                    <div class="contactus-text">
+                        <h3>Email</h3>
+                        <p>krishnaponnu181@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        <div class="contactForm">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h2>Send Message</h2>
+                <div class="inputBox">
+                    <input type="text" name="full_name" id="" required>
+                    <span>Full Name</span>
+                </div>
+                <div class="inputBox">
+                    <input type="text" name="email" id="" required>
+                    <span>Eamil</span>
+                </div>
+                <div class="inputBox">
+                    <textarea name="sendmessage" id="" required></textarea>
+                    <span>Type your message here.....</span>
+                </div>
+                <div class="inputBox">
+                    <input type="submit" value="Send" id="" required>
+                </div>
+            </form>
+        </div>
+    </section>
+    {% endblock %} 
+
+    <!-- Adding icons from iconic.io -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

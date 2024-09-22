@@ -1,0 +1,239 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Food Odering</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="{% static 'css\style.css' %}" rel="stylesheet" />
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body class="body">
+    {% csrf_token %}
+    <!-- headernav -->
+    {% block navbar %}
+    <nav>
+        <ul>  
+          <li><a href="{%url 'home_view'%}" class="logo"><ion-icon name="fast-food-outline"></ion-icon></a></li>
+          <li >
+            <form action="{% url 'search_result' %}" class="search" method="GET">
+            {% csrf_token %}
+            <input type="text" name="search" placeholder="What you want to eat?">
+            <button type="submit" class="search-btn"><ion-icon class="searchicon" name="search-outline"></ion-icon></button>
+            </form>
+          </li>       
+          <li><a href="{% url 'food_cart' %}" class="cart"><ion-icon name="cart-outline"></ion-icon>
+            <span class="badge">  
+                {% if request.user.cart_set.all.count > 0 %}
+                    {{request.user.cart_set.all.count}}
+                {% else %}
+                    0
+                {% endif %}</span>  
+        </a>
+        </li>
+        </ul>
+      </nav>
+      {% endblock %}
+<div class="section">
+    {% block recommend %}
+        <!-- main highlight -->
+        <div class="main-highlight">
+            <!-- title section and arrow -->
+            <div class="main-header">
+                <h2 class="main-title">Recommendations</h2>
+            </div>
+            <!-- highlight food menu -->
+            <div class="highlight-wrapper">
+                {% for item in recommend %}
+                <a class="highlight-card" style="text-decoration: none;"  href="{% url 'food_detail' item.id %}">
+                    <div class="highlight-card">
+                        <img class="highlight-img" src="{{item.image.url}}" alt="">
+                        <div class="highlight-desc">
+                            <h6>{{item.food_name}}</h6>
+                           
+                        </div>
+                    </div>
+                </a>                
+                {% endfor %}
+            </div>
+        </div>
+        {% endblock %}
+        {% block menu%}
+        <!-- main menu/order -->
+        <div class="main-menus">
+            <!-- filter section -->
+            <div class="main-filter">
+                <div>
+                    <h2 class="main-title">Menu <br>Category</h2>
+                </div>
+                <div class="filter-wrapper">
+                    <a style="text-decoration: none;" href="{% url 'home_view' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="restaurant-outline"></ion-icon>
+                            </div>
+                            <p>All Menus</p>
+                        </div>
+                    </a>
+                    <a style="text-decoration: none;" href="{% url 'search_burger' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="fast-food-outline"></ion-icon>
+                            </div>
+                            <p>Burger</p>
+                        </div>
+                    </a>
+                    <a style="text-decoration: none;" href="{% url 'search_pizza' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="pizza-outline"></ion-icon>
+                            </div>
+                            <p>Pizza</p>
+                        </div>
+                    </a>
+                    <a style="text-decoration: none;" href="{% url 'search_wine' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="wine-outline"></ion-icon>
+                            </div>
+                            <p>Wine</p>
+                        </div>
+                    </a>
+                    <a style="text-decoration: none;" href="{% url 'search_icecream' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="ice-cream-outline"></ion-icon>
+                            </div>
+                            <p>Ice Cream</p>
+                        </div>
+                    </a>
+                    <a style="text-decoration: none;" href="{% url 'search_coffee' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="cafe-outline"></ion-icon>
+                            </div>
+                            <p>Coffee</p>
+                        </div>
+                    </a>
+                    <a style="text-decoration: none;" href="{% url 'search_seafood' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="fish-outline"></ion-icon>
+                            </div>
+                            <p>Seafood</p>
+                        </div>
+                    </a>
+                    <a style="text-decoration: none;" href="{% url 'search_healthy' %}">
+                        <div class="filter-card">
+                            <div class="filter-icon">
+                                <ion-icon name="nutrition-outline"></ion-icon>
+                            </div>
+                            <p>Meals&amp;Breakfast</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <hr class="divider">
+            {% endblock %}
+            {% block content %}
+            <!-- list of food -->
+            <div class="main-detail">
+                <h2 class="main-title">Choose Order</h2>               
+                <div class="detail-wrapper">
+                    {% for item in foodmenu %}
+                        <div class="detail-card">
+                            <a href="{% url 'food_detail' item.id %}" style="text-decoration: none;">
+                                <img class="detail-img" src="{{item.image.url}}" alt="">
+                            </a>
+                                <div class="detail-desc">
+                                    <div class="detail-name">
+                                        <h5>{{item.food_name}}</h5>
+                                        <h6 class="price">₹{{item.food_price}}</h6>
+                                    </div>
+                                    <form action="{% url 'wish_list' item.id %}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" name="wishlistbtn" class="btn"><ion-icon class="detail-favorites" name="bookmark-outline"></ion-icon></button>
+                                    </form>
+                                </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+ <!-- sidebar -->
+ {% block sidebar %}
+ <div class="sidebar">
+    <ul>
+      <li>
+        <a href="{%url 'home_view'%}">
+          <span class="icon"><ion-icon name="storefront-outline"></ion-icon></span>
+          <span class="text">Home</span>
+        </a>
+      </li> 
+      <li>
+        <a href="{% url 'order_view' %}">
+          <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
+          <span class="text">Orders</span>
+        </a>
+      </li>
+      <li>
+        <a href="{%url 'wishlist_view'%}">
+          <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
+          <span class="text">Wishlist</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'contact_us' %}">
+          <span class="icon"><ion-icon name="call-outline"></ion-icon></span>
+          <span class="text">Contact Us</span>
+        </a>
+      </li>
+     <div class="bottom-logout">
+      <li>
+        <a href="{% url 'user_profile' request.user.id %}">
+          <span class="icon">
+            <div class="imgBx">
+              <img src="{{user.profile.url}}" alt="jj">
+            </div>
+          </span>
+          <span class="text">{{user.username}}</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'logout_view' %}">
+          <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+          <span class="text">LogoOut</span>
+        </a>
+      </li>
+     </div>
+    </ul>
+  </div>
+{% endblock %}
+    
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <!-- Adding icons from iconic.io -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+
+</html>

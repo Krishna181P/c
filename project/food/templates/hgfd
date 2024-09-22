@@ -1,0 +1,24 @@
+<div class="highlight-wrapper">
+                {% for item in recommend %}
+                <a class="highlight-card" style="text-decoration: none;"  href="{% url 'food_detail' item.id %}">
+                    <div class="highlight-card">
+                        <img class="highlight-img" src="{{item.image.url}}" alt="">
+                        <div class="highlight-desc">
+                            <h6>{{item.food_name}}</h6>
+                            <p>₹{{item.food_price}}
+                            <p>
+                        </div>
+                    </div>
+                </a>                
+                {% endfor %}
+                
+                
+            </div>
+
+
+
+
+            <form action="{% url 'wishlist' item.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="wishlistbtn" class="btn"><ion-icon class="detail-favorites" name="bookmark-outline"></ion-icon></button>
+            </form
